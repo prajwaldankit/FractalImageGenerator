@@ -4,7 +4,8 @@ class FractalCanvas {
   constructor(parent) {
     this.parent = parent;
     this.init();
-    new Fractal(this.canvas);
+    // new Fractal(this.canvas);
+    new Madelbrot(this.canvas);
   }
 
   init() {
