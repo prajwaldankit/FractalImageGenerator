@@ -1,5 +1,5 @@
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
+const CANVAS_WIDTH = 1280;
+const CANVAS_HEIGHT = 720;
 /**
  *
  * Generates the canvas inside the div for drawing the fractal images
@@ -13,8 +13,11 @@ class FractalCanvas {
    */
   constructor(parent) {
     this.parent = parent;
+    this.parent.style.width = `${CANVAS_WIDTH}px`;
+    this.parent.style.height = `${CANVAS_HEIGHT}px`;
     this.init();
-    // new Fractal(this.canvas);
+    // new Silk(this.canvas);
+    new Fractal(this.canvas);
     new Madelbrot(this.canvas);
   }
 

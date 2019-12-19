@@ -1,4 +1,8 @@
 h1 {
   font-size: 64px;
   color: whitesmoke;
+  text-align: center;
+}
+.fractal-container {
+  margin: 0 auto;
 }

@@ -5,14 +5,16 @@ class Madelbrot {
     this.panX = .5;
     this.panY = .6;
     this.canvas = parent;
+    this.listOfPoints = new Array(5);
     let that = this;
     this.context = this.canvas.getContext('2d');
     this.init();
     window.addEventListener('keypress', () => {
       that.magnificationFactor += 400;
-      console.log(that.magnificationFactor)
+      console.log(that.magnificationFactor, this.noOfIterations)
       that.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
       this.init(this.noOfIterations + 10)
+      // this.init()
     })
   }
 
@@ -25,7 +27,7 @@ class Madelbrot {
             y / this.magnificationFactor - this.panY);
         if (belongsToSet != 0) {
           this.context.fillStyle = `hsl(240,100%,${belongsToSet}%)`;
-          this.context.fillRect(x, y, 1, 1); // Draw a black pixel
+          this.context.fillRect(x, y, 2, 2); // Draw a black pixel
         }
       }
     }
