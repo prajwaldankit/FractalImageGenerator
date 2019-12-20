@@ -64,7 +64,7 @@ class Fractal {
       this.ctx.beginPath()
       this.ctx.moveTo(this.prevX, this.prevY)
       this.ctx.lineTo(this.currX, this.currY)
-      this.ctx.strokeStyle = 'white';
+      this.ctx.strokeStyle = 'blue';
       this.ctx.lineWidth = 2
       this.ctx.stroke()
       this.ctx.closePath()
@@ -72,7 +72,7 @@ class Fractal {
       this.ctx.beginPath()
       this.ctx.moveTo(this.currX - 1, this.currY - 1)
       this.ctx.lineTo(this.currX, this.currY)
-      this.ctx.strokeStyle = 'white';
+      this.ctx.strokeStyle = 'blue';
       this.ctx.lineWidth = 2
       this.ctx.stroke()
       this.ctx.closePath()

@@ -8,8 +8,8 @@ class Stars {
     this.init();
   }
   init() {
-    this.generate();
-    this.drawStars();
+    // this.generate();
+    // this.drawStars();
   }
   generate() {
     for (var n = 0; n < NUM_OF_STARS; n++) {

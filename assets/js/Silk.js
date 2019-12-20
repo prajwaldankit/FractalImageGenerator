@@ -32,23 +32,12 @@ class Silk {
     this.isMouseClicked = true
     this.updateCurrentPosition(e)
     this.ctx.beginPath()
-    this.waves = [];
-    for (let i = 0; i < 2; i++) {
-      this.waves.push(new Wave());
-    }
-    this.ctx.moveTo(this.currX, this.currY)
     this.holdDraw = setInterval(() => {
-      // this.ctx.moveTo(this.currX, this.currY)
-      this.waves.forEach((wave) => {
-        // console.log(wave)
-        this.draw('down', wave);
-
-      })
-      // console.log(this.wave)
-      // this.draw('down', this.wave);
-      // this.ctx.closePath();
+      this.ctx.moveTo(this.currX, this.currY);
+      this.draw('down', this.wave);
+      this.ctx.closePath();
     }
-      , 10)
+      , 16)
   }
 
   onMouseUp() {
@@ -86,35 +75,25 @@ class Silk {
   }
 
   draw(parent, wave) {
-    const isValidDraw = wave.draw(parent, wave, this.ctx);
-    if (!wave.isValidDraw()) {
-      wave = new Wave();
-      wave.draw(parent, wave, this.ctx)
-    }
     let x, y;
-    console.log('mouse down')
-    console.log(wave.choice)
-    console.log(wave);
     this.ctx.beginPath();
     switch (wave.choice) {
       case 1:
         x = this.currX + wave.direction1 * this.length;
         y = this.currY + wave.direction2 * this.length;
-        console.log('1', wave.direction1)
-        console.log('2', wave.direction1)
         y += wave.amplitude * this.sine(x * 0.10 + wave.amplitude * 0.10);
         if (this.checkSin) {
           y += wave.amplitude * this.sine(x * 0.10 + wave.amplitude * 0.10);
         } else {
           y += wave.amplitude * this.cosine(x * 0.10 + wave.amplitude * 0.10);
         }
-        console.log('choice 1')
 
-        this.ctx.lineTo(x, y)
+        console.log(x, y);
+        this.ctx.fillstyle = 'green';
+        this.ctx.fillRect(x, y, 4, 4)
         break;
 
       case 2:
-        console.log('choice 2')
         y = this.currY + wave.direction1 * this.length;
         x = this.currX + wave.direction2 * this.length;
         x += wave.amplitude * this.sine(y * 0.10 + wave.amplitude);
@@ -123,23 +102,27 @@ class Silk {
         } else {
           x += wave.amplitude * this.cosine(y * 0.10 + wave.amplitude);
         }
-
-        this.ctx.lineTo(x, y)
+        console.log(x, y);
+        this.ctx.fillstyle = 'green';
+        this.ctx.fillRect(x, y, 4, 4);
+        // this.ctx.lineTo(x, y)
         break;
     }
 
     if (parent == 'down') {
-      this.lineColor = `hsl(240,100%,${Math.random() * (40 - 20) + 20}%)`;
+      // this.lineColor = `hsl(240,100%,${Math.random() * (40 - 20) + 20}%)`;
+      // this.lineColor = 'white';
       if (this.length < wave.length) {
         this.length++;
-        this.ctx.strokeStyle = `rgba(0,0,255,${Math.random()})`;
-        this.ctx.strokeStyle = this.lineColor;
-        this.ctx.lineWidth = 1
-        this.ctx.stroke()
-        this.ctx.shadowOffsetX = 1;
-        this.ctx.shadowOffsetY = 4;
-        this.ctx.shadowBlur = 1;
-        this.ctx.shadowColor = `hsl(240,100%,${Math.random() * (10 - 5) + 5}%)`;
+        // this.ctx.strokeStyle = `rgba(0,0,255,${Math.random()})`;
+        // this.ctx.strokeStyle = this.lineColor;
+        // this.ctx.lineWidth = 1;
+        // this.ctx.stroke();
+        this.ctx.shadowOffsetX = Math.random() * 7;
+        this.ctx.shadowOffsetY = Math.random() * 8;
+        this.ctx.shadowBlur = 13;
+        this.ctx.shadowColor = `red`;
+        // this.ctx.shadowColor = `hsl(240,100%,${Math.random() * (10 - 5) + 5}%)`;
 
       } else {
         this.ctx.closePath();
@@ -147,9 +130,9 @@ class Silk {
         this.ctx.moveTo(this.currX, this.currY);
         this.wave = new Wave();
         this.length = 0;
-        for (i = 0; i < this.waves.length - 1; i++) {
-          this.waves[i] = new Wave();
-        }
+        // for (i = 0; i < this.waves.length - 1; i++) {
+        // this.waves[i] = new Wave();
+        // }
 
       }
     }

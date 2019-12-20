@@ -16,9 +16,9 @@ class FractalCanvas {
     this.parent.style.width = `${CANVAS_WIDTH}px`;
     this.parent.style.height = `${CANVAS_HEIGHT}px`;
     this.init();
-    // new Silk(this.canvas);
+    new Silk(this.canvas);
     new Fractal(this.canvas);
-    new Madelbrot(this.canvas);
+    // new Madelbrot(this.canvas);
   }
 
   /**

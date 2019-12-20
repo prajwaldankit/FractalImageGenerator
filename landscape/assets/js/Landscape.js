@@ -4,7 +4,7 @@ class Landscape {
     this.context = this.parent.getContext('2d');
     this.reference = ref;
     this.refContext = this.reference.context;
-    this.dimension = 256;
+    this.dimension = 512;
     this.land = [];
     this.colx = [];
     this.originX;
@@ -13,11 +13,12 @@ class Landscape {
     this.shadow;
     this.ht;
     this.sunht;
+    this.stars = new Stars(this.parent);
     this.init();
-    // new Stars(this.parent);
   }
 
   init() {
+    this.stars.generate();
     for (let i = 0; i <= this.dimension; i++) {
       this.land.push(new Array(this.dimension + 1));
       this.colx.push(new Array(this.dimension + 1));
@@ -25,17 +26,18 @@ class Landscape {
     this.generate();
     this.getReferences();
     this.draw3d();
-    // setInterval(() => {
-    //   this.sunht += 0.1 + (this.sunht / 10.0);
-    //   if (this.sunht > 5) {
-    //     this.sunht = 0;
-    // generate(); 
-    //   }
-    //   this.draw3d();
-    //   console.log('here')
-    // }, 200);
     // console.log(this.land)
     // console.log(this.colx)
+    setInterval(() => {
+      console.log(this.sunht);
+      this.sunht += 0.1 + (this.sunht / 10.0);
+      console.log(this.sunht);
+      if (this.sunht > 5) {
+        this.sunht = 0;
+        // this.generate();
+      }
+      this.draw3d();
+    }, 200);
   }
 
   getReferences() {
@@ -84,10 +86,12 @@ class Landscape {
 
   draw3d() {
     this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    // new Stars(this.parent);
-    this.originX = CANVAS_WIDTH / 2;
-    this.originY = CANVAS_HEIGHT - this.dimension * 2 - 100;
-    this.sunht = 4;
+    this.stars.drawStars();
+    this.originX = 0;
+    // this.originX = CANVAS_WIDTH / 2;
+    this.originY = 0;
+    // this.originY = CANVAS_HEIGHT - this.dimension * 2 - 100;
+    this.sunht = this.sunht || 0;
     for (let lat = 0; lat < this.dimension; lat++) {
       // some pre-calculations, for speed:
       let ox = this.originX + lat * 2;
