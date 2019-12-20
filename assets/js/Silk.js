@@ -1,4 +1,14 @@
+/**
+ *
+ *
+ * @class Silk
+ */
 class Silk {
+  /**
+   *Creates an instance of Silk.
+   * @param {*} parent
+   * @memberof Silk
+   */
   constructor(parent) {
     this.canvas = parent;
     this.initVars();
@@ -6,6 +16,11 @@ class Silk {
     this.waves = [];
     this.length = 0;
   }
+  /**
+   *
+   *
+   * @memberof Silk
+   */
   initVars() {
     this.ctx = this.canvas.getContext("2d")
     this.isMouseClicked = false
@@ -17,6 +32,11 @@ class Silk {
     this.wave = new Wave();
   }
 
+  /**
+   *
+   *
+   * @memberof Silk
+   */
   initEvents() {
     this.canvas.addEventListener("mousemove", (e) => this.onMouseMove(e))
     this.canvas.addEventListener("mousedown", (e) => this.onMouseDown(e))
@@ -25,21 +45,38 @@ class Silk {
     this.canvas.addEventListener("mouseenter", (e) => this.onMouseEnter(e))
     window.addEventListener('keydown', (e) => this.clearCanvas(e))
   }
+  /**
+   *
+   *
+   * @param {*} e
+   * @memberof Silk
+   */
   clearCanvas(e) {
     if (e.key == ' ') this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
   }
+  /**
+   *
+   *
+   * @param {*} e
+   * @memberof Silk
+   */
   onMouseDown(e) {
     this.isMouseClicked = true
     this.updateCurrentPosition(e)
     this.ctx.beginPath()
     this.holdDraw = setInterval(() => {
-      this.ctx.moveTo(this.currX, this.currY);
+      // this.ctx.moveTo(this.currX, this.currY);
       this.draw('down', this.wave);
-      this.ctx.closePath();
+      // this.ctx.closePath();
     }
-      , 16)
+      , 10)
   }
 
+  /**
+   *
+   *
+   * @memberof Silk
+   */
   onMouseUp() {
     this.isMouseClicked = false
     this.length = 0;
@@ -47,15 +84,32 @@ class Silk {
     this.ctx.closePath();
   }
 
+  /**
+   *
+   *
+   * @param {*} e
+   * @memberof Silk
+   */
   onMouseEnter(e) {
     this.isMouseInCanvas = true
     this.updateCurrentPosition(e)
   }
 
+  /**
+   *
+   *
+   * @memberof Silk
+   */
   onMouseOut() {
     this.isMouseInCanvas = false
   }
 
+  /**
+   *
+   *
+   * @param {*} e
+   * @memberof Silk
+   */
   onMouseMove(e) {
     if (this.isMouseClicked && this.isMouseInCanvas) {
       this.updateCurrentPosition(e)
@@ -67,6 +121,12 @@ class Silk {
     }
   }
 
+  /**
+   *
+   *
+   * @param {*} e
+   * @memberof Silk
+   */
   updateCurrentPosition(e) {
     this.prevX = this.currX
     this.prevY = this.currY
@@ -74,6 +134,13 @@ class Silk {
     this.currY = e.clientY - this.canvas.offsetTop
   }
 
+  /**
+   *
+   *
+   * @param {*} parent
+   * @param {*} wave
+   * @memberof Silk
+   */
   draw(parent, wave) {
     let x, y;
     this.ctx.beginPath();
@@ -89,8 +156,8 @@ class Silk {
         }
 
         console.log(x, y);
-        this.ctx.fillstyle = 'green';
-        this.ctx.fillRect(x, y, 4, 4)
+        this.ctx.fillStyle = '#00f';
+        this.ctx.fillRect(x, y, 2, 2)
         break;
 
       case 2:
@@ -103,26 +170,18 @@ class Silk {
           x += wave.amplitude * this.cosine(y * 0.10 + wave.amplitude);
         }
         console.log(x, y);
-        this.ctx.fillstyle = 'green';
-        this.ctx.fillRect(x, y, 4, 4);
-        // this.ctx.lineTo(x, y)
+        this.ctx.fillStyle = '#00f';
+        this.ctx.fillRect(x, y, 2, 2);
         break;
     }
 
     if (parent == 'down') {
-      // this.lineColor = `hsl(240,100%,${Math.random() * (40 - 20) + 20}%)`;
-      // this.lineColor = 'white';
       if (this.length < wave.length) {
         this.length++;
-        // this.ctx.strokeStyle = `rgba(0,0,255,${Math.random()})`;
-        // this.ctx.strokeStyle = this.lineColor;
-        // this.ctx.lineWidth = 1;
-        // this.ctx.stroke();
         this.ctx.shadowOffsetX = Math.random() * 7;
         this.ctx.shadowOffsetY = Math.random() * 8;
-        this.ctx.shadowBlur = 13;
-        this.ctx.shadowColor = `red`;
-        // this.ctx.shadowColor = `hsl(240,100%,${Math.random() * (10 - 5) + 5}%)`;
+        this.ctx.shadowBlur = Math.random() * 10;
+        this.ctx.shadowColor = `blue`;
 
       } else {
         this.ctx.closePath();
@@ -130,18 +189,28 @@ class Silk {
         this.ctx.moveTo(this.currX, this.currY);
         this.wave = new Wave();
         this.length = 0;
-        // for (i = 0; i < this.waves.length - 1; i++) {
-        // this.waves[i] = new Wave();
-        // }
-
       }
     }
 
   }
 
+  /**
+   *
+   *
+   * @param {*} angle
+   * @returns
+   * @memberof Silk
+   */
   sine(angle) {
     return Math.sin(angle);
   }
+  /**
+   *
+   *
+   * @param {*} angle
+   * @returns
+   * @memberof Silk
+   */
   cosine(angle) {
     return Math.cos(angle);
   }

@@ -1,5 +1,15 @@
+/**
+ *
+ *
+ * @class Madelbrot
+ */
 class Madelbrot {
 
+  /**
+   *Creates an instance of Madelbrot.
+   * @param {*} parent
+   * @memberof Madelbrot
+   */
   constructor(parent) {
     this.magnificationFactor = 200;
     this.panX = .5;
@@ -18,6 +28,12 @@ class Madelbrot {
     })
   }
 
+  /**
+   *
+   *
+   * @param {*} noOfIterations
+   * @memberof Madelbrot
+   */
   init(noOfIterations) {
     this.noOfIterations = noOfIterations || 50;
     for (let x = 0; x < this.canvas.width; x++) {
@@ -33,6 +49,14 @@ class Madelbrot {
     }
   }
 
+  /**
+   *
+   *
+   * @param {*} x
+   * @param {*} y
+   * @returns
+   * @memberof Madelbrot
+   */
   checkIfBelongsToMandelbrotSet(x, y) {
     let realComponent = x;
     let imaginaryComponent = y;

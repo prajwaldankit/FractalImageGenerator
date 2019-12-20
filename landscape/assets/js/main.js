@@ -1,5 +1,9 @@
-const container = document.getElementsByClassName('canvas-container');
+const container = document.getElementById('canvas-container');
+const generate = document.getElementById('generate');
+const size = document.getElementById('size');
 
-for (i = 0; i < container.length; i++) {
-  new MapContainer(container[i]);
+generate.onclick = function () {
+  mapDimension = parseInt(size.value, 10);
+  let map = new MapContainer(container, mapDimension);
+  // container.removeChild(container.childNodes[0]);
 }

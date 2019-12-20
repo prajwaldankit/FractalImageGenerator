@@ -1,10 +1,22 @@
+/**
+ *
+ *
+ * @class Landscape
+ */
 class Landscape {
-  constructor(parent, ref) {
+  /**
+   *Creates an instance of Landscape.
+   * @param {*} parent
+   * @param {*} ref
+   * @param {*} size
+   * @memberof Landscape
+   */
+  constructor(parent, ref, size) {
     this.parent = parent;
     this.context = this.parent.getContext('2d');
     this.reference = ref;
     this.refContext = this.reference.context;
-    this.dimension = 512;
+    this.dimension = size;
     this.land = [];
     this.colx = [];
     this.originX;
@@ -17,6 +29,11 @@ class Landscape {
     this.init();
   }
 
+  /**
+   *
+   *
+   * @memberof Landscape
+   */
   init() {
     this.stars.generate();
     for (let i = 0; i <= this.dimension; i++) {
@@ -26,20 +43,22 @@ class Landscape {
     this.generate();
     this.getReferences();
     this.draw3d();
-    // console.log(this.land)
-    // console.log(this.colx)
     setInterval(() => {
       console.log(this.sunht);
       this.sunht += 0.1 + (this.sunht / 10.0);
       console.log(this.sunht);
       if (this.sunht > 5) {
         this.sunht = 0;
-        // this.generate();
       }
       this.draw3d();
     }, 200);
   }
 
+  /**
+   *
+   *
+   * @memberof Landscape
+   */
   getReferences() {
     this.colors = new Array(REF_CANVAS_WIDTH + 1);
     for (let cx = 0; cx <= REF_CANVAS_WIDTH; cx++) {
@@ -53,6 +72,11 @@ class Landscape {
     }
   }
 
+  /**
+   *
+   *
+   * @memberof Landscape
+   */
   generate() {
     this.land[0][0] = new Random().noise(100);
     this.land[this.dimension][0] = new Random().noise(100);
@@ -64,15 +88,11 @@ class Landscape {
       gridsize >= 1;
       gridsize = Math.floor(gridsize / 2)
     ) {
-      // console.log("Generating with gridsize " + gridsize);
       this.halflon(gridsize);
       this.halflat(gridsize);
     }
-    // Now pre-calculate the colours:
     for (let lat = 0; lat <= this.dimension; lat++) {
       for (let lon = 0; lon <= this.dimension; lon++) {
-        // We are also adding a little more noise to col, looks fluffier.
-        // colour based on height, but height min 2px (sea level):
         this.colx[lat][lon] = new Random().limit(
           0,
           Math.floor(this.land[lat][lon] * 2 + new Random().noise(0) + REF_CANVAS_WIDTH / 2),
@@ -84,29 +104,29 @@ class Landscape {
 
   }
 
+  /**
+   *
+   *
+   * @memberof Landscape
+   */
   draw3d() {
     this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     this.stars.drawStars();
-    this.originX = 0;
-    // this.originX = CANVAS_WIDTH / 2;
-    this.originY = 0;
-    // this.originY = CANVAS_HEIGHT - this.dimension * 2 - 100;
+    this.originX = CANVAS_WIDTH / 2;
+    this.originY = CANVAS_HEIGHT / 2 - this.dimension * 2 + 300;
     this.sunht = this.sunht || 0;
     for (let lat = 0; lat < this.dimension; lat++) {
-      // some pre-calculations, for speed:
+
       let ox = this.originX + lat * 2;
       let oy = this.originY + lat;
       this.shadow = this.land[lat][0];
       for (let lon = 1; lon < this.dimension; lon++) {
         this.ht = this.land[lat][lon];
-        // ctx.fillStyle = '#222'
         this.context.fillStyle =
           this.colors[this.colx[lat][lon]][
           Math.floor(new Random().limit(0, this.shadow - this.ht + REF_CANVAS_HEIGHT / 2, REF_CANVAS_HEIGHT - 1))
           ];
-        // Maths for the isometric landscape view:
         this.context.fillRect(ox - lon * 2, oy + lon - this.ht, 2, 10);
-        // And drop the this.shadow. Raise it if we are in the light.
 
         this.shadow = this.shadow - this.sunht;
         if (this.shadow < this.ht) {
@@ -115,7 +135,6 @@ class Landscape {
       }
     }
     for (let lat = 0; lat <= this.dimension; lat++) {
-      // Front Left edge:
       this.context.fillStyle = 'gray';
       this.context.fillRect(
         this.originX + lat * 2 - this.dimension * 2,
@@ -123,7 +142,6 @@ class Landscape {
         2,
         -10 - this.land[lat][this.dimension]
       );
-      // Front right edge:
       this.context.fillStyle = 'darkGray';
       this.context.fillRect(
         this.originX + this.dimension * 2 - lat * 2,
@@ -134,10 +152,13 @@ class Landscape {
     }
   }
 
+  /**
+   *
+   *
+   * @param {*} gridsize
+   * @memberof Landscape
+   */
   halflon(gridsize) {
-    // Generate new points on the longitudinal axis.
-    // For each new point we take the average of the grid point to
-    // our E and W, and add some proportional "new Random().noise" up or down:
     for (let lat = 0; lat <= this.dimension; lat += gridsize * 2) {
       for (let lon = gridsize; lon <= this.dimension; lon += gridsize * 2) {
         this.land[lat][lon] =
@@ -149,10 +170,13 @@ class Landscape {
     }
   }
 
+  /**
+   *
+   *
+   * @param {*} gridsize
+   * @memberof Landscape
+   */
   halflat(gridsize) {
-    // Generate new points on the latitudinal axis.
-    // For each new point we take the average of the grid point to
-    // our N and S, and add some proportional "noise" up or down:
     for (let lat = gridsize; lat <= this.dimension; lat += gridsize * 2) {
       for (let lon = 0; lon <= this.dimension; lon += gridsize) {
         this.land[lat][lon] =

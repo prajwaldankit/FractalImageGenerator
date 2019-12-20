@@ -1,12 +1,29 @@
 const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 800;
+/**
+ *
+ *
+ * @class MainMap
+ */
 class MainMap {
-  constructor(parent) {
+  /**
+   *Creates an instance of MainMap.
+   * @param {*} parent
+   * @param {*} size
+   * @memberof MainMap
+   */
+  constructor(parent, size) {
     this.parent = parent;
+    this.size;
     this.parent.style.width = CANVAS_WIDTH;
     this.parent.style.height = CANVAS_HEIGHT;
     this.init();
   }
+  /**
+   *
+   *
+   * @memberof MainMap
+   */
   init() {
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
@@ -14,8 +31,16 @@ class MainMap {
     this.canvas.width = CANVAS_WIDTH;
     this.parent.appendChild(this.canvas);
   }
-  generate(ref) {
+  /**
+   *
+   *
+   * @param {*} ref
+   * @param {*} size
+   * @memberof MainMap
+   */
+  generate(ref, size) {
+    this.size = size;
     this.reference = ref;
-    new Landscape(this.canvas, this.reference);
+    new Landscape(this.canvas, this.reference, this.size);
   }
 }

@@ -1,5 +1,15 @@
 const NUM_OF_STARS = 100;
+/**
+ *
+ *
+ * @class Stars
+ */
 class Stars {
+  /**
+   *Creates an instance of Stars.
+   * @param {*} parent
+   * @memberof Stars
+   */
   constructor(parent) {
     this.parent = parent;
     this.context = this.parent.getContext('2d');
@@ -7,16 +17,31 @@ class Stars {
     this.starY = new Array(NUM_OF_STARS);
     this.init();
   }
+  /**
+   *
+   *
+   * @memberof Stars
+   */
   init() {
     // this.generate();
     // this.drawStars();
   }
+  /**
+   *
+   *
+   * @memberof Stars
+   */
   generate() {
     for (var n = 0; n < NUM_OF_STARS; n++) {
       this.starX[n] = new Random().rand(CANVAS_WIDTH);
       this.starY[n] = new Random().rand(CANVAS_HEIGHT);
     }
   }
+  /**
+   *
+   *
+   * @memberof Stars
+   */
   drawStars() {
     for (var n = 0; n < NUM_OF_STARS; n++) {
 

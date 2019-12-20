@@ -1,4 +1,13 @@
+/**
+ *
+ *
+ * @class Wave
+ */
 class Wave {
+  /**
+   *Creates an instance of Wave.
+   * @memberof Wave
+   */
   constructor() {
     this.amplitude = Math.random() * (10 - 2) + 2;
     this.checkSin = this.randomBool();
@@ -9,6 +18,12 @@ class Wave {
     this.drawnLength = 0;
     this.length = Math.random() * 40;
   }
+  /**
+   *
+   *
+   * @returns
+   * @memberof Wave
+   */
   isValidDraw() {
     if (this.drawnLength < this.length) {
       return true;
@@ -17,15 +32,41 @@ class Wave {
     }
   }
 
+  /**
+   *
+   *
+   * @returns
+   * @memberof Wave
+   */
   randomBool() {
     return Math.random() >= 0.5;
   }
+  /**
+   *
+   *
+   * @returns
+   * @memberof Wave
+   */
   randomDirection() {
     return Math.random() <= 0.33 ? -1 : Math.random() >= 0.66 ? 1 : 0;
   }
+  /**
+   *
+   *
+   * @param {*} angle
+   * @returns
+   * @memberof Wave
+   */
   sine(angle) {
     return Math.sin(angle);
   }
+  /**
+   *
+   *
+   * @param {*} angle
+   * @returns
+   * @memberof Wave
+   */
   cosine(angle) {
     return Math.cos(angle);
   }
